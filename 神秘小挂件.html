@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../练习代码/神秘小挂件.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <img src="科技边框.png" alt="" class="scib">
+    <img src="左源.png" alt="" class="leftt">
+    <img src="右源头.png" alt="" class="rightt">
+    <img src="科技边框2.png" alt="" id="scib2">
+    <div class="box1"><a href="#">神秘空间1</a></div>
+    <div class="box2"><a href="#">神秘空间2</a></div>
+    <div class="box3"><a href="#">神秘空间3</a></div>
+    <div class="box4"><a href="../练习代码/大作业.html">移除挂件</a></div>
+    <div id="image-container1"></div>
+    <div id="image-container2"></div>
+    <div id="image-container3"></div>
+
+    <!-- 添加三个按钮 -->
+    <button class="character-button" id="button1">关于这方天地</button>
+    <button class="character-button" id="button2">关于三大空间</button>
+    <button class="character-button" id="button3">关于其他疑惑</button>
+    <p id="textDisplay"></p>
+    <div class="pendulum-wrapper" id="pendulumWrapper">
+        <div class="rope"></div>
+        <div class="image-container">
+            <img src="小挂件.png" alt="示例图片">
+        </div>
+    </div>
+
+    <script>
+        function createFragmentAnimation(imageSrc, containerId, rows, cols) {
+            const img = new Image();
+            img.src = imageSrc;
+            const scaleFactor = 0.8;
+
+            img.onload = function () {
+                setTimeout(() => {
+                    const container = document.getElementById(containerId);
+                    const fragmentWidth = (img.width / cols) * scaleFactor;
+                    const fragmentHeight = (img.height / rows) * scaleFactor;
+
+                    for (let i = 0; i < rows; i++) {
+                        for (let j = 0; j < cols; j++) {
+                            const fragment = document.createElement('div');
+                            fragment.className = 'fragment';
+                            fragment.style.width = fragmentWidth + 'px';
+                            fragment.style.height = fragmentHeight + 'px';
+                            fragment.style.left = j * fragmentWidth + 'px';
+                            fragment.style.top = i * fragmentHeight + 'px';
+                            fragment.style.backgroundImage = `url('${img.src}')`;
+                            fragment.style.backgroundPosition = `-${j * fragmentWidth}px -${i * fragmentHeight}px`;
+                            fragment.style.backgroundSize = `${img.width * scaleFactor}px ${img.height * scaleFactor}px`;
+
+                            const xOffset = Math.random() * 80 - 40;
+                            const yOffset = Math.random() * 80 - 40;
+                            const rotate = Math.random() * 10 - 5;
+                            fragment.style.transform = `translate(${xOffset}px, ${yOffset}px) rotate(${rotate}deg)`;
+
+                            container.appendChild(fragment);
+
+                            setTimeout(() => {
+                                fragment.style.transform = 'translate(0px, 0px) rotate(0deg)';
+                            }, Math.random() * 300);
+                        }
+                    }
+                }, 5000);
+            };
+        }
+
+        // 调用函数处理三个图片，分别指定不同的碎片分裂数
+        createFragmentAnimation("左人物.png", "image-container1", 35, 35);
+        createFragmentAnimation("中人物.png", "image-container2", 35, 35);
+        createFragmentAnimation("右人物.png", "image-container3", 34, 34);
+
+
+        const buttons = [
+            document.getElementById('button1'),
+            document.getElementById('button2'),
+            document.getElementById('button3')
+        ];
+        const textDisplay = document.getElementById('textDisplay');
+        const textsToDisplay = [
+            '欢迎探索Plastiny大人创造的神秘空间\nPlastiny大人用神器ComfyUI\n炼制了无数精美壁纸\n藏匿于三大神秘空间中',
+            '神秘空间1蕴藏精美手机壁纸\n神秘空间2蕴藏精美电脑壁纸',
+            '神秘小挂件由您亲自探索\n更多内容敬请期待'
+        ];
+
+        function startTyping(index) {
+            clearInterval(intervalId);
+            textDisplay.innerHTML = '';
+            let currentIndex = 0;
+            intervalId = setInterval(() => {
+                if (currentIndex < textsToDisplay[index].length) {
+                    const char = textsToDisplay[index][currentIndex];
+                    if (char === '\n') {
+                        textDisplay.innerHTML += '<br>';
+                    } else {
+                        textDisplay.innerHTML += char;
+                    }
+                    currentIndex++;
+                } else {
+                    clearInterval(intervalId);
+                }
+            }, 100);
+        }
+
+        let intervalId;
+
+        buttons.forEach((button, index) => {
+            button.addEventListener('click', () => startTyping(index));
+        });
+        const pendulumWrapper = document.getElementById('pendulumWrapper');
+        let angle = -30;
+        let increasing = true;
+
+        function swing() {
+            if (increasing) {
+                angle += 0.1; // 减小角度增量以降低摆速
+                if (angle >= 30) {
+                    increasing = false;
+                }
+            } else {
+                angle -= 0.1; // 减小角度增量以降低摆速
+                if (angle <= -30) {
+                    increasing = true;
+                }
+            }
+            const rotation = `rotate(${angle}deg)`;
+            pendulumWrapper.style.transform = rotation;
+            requestAnimationFrame(swing);
+        }
+
+        swing();
+    </script>
+
+</body>
+
+</html>
