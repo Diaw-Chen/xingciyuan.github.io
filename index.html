@@ -4,10 +4,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://diaw-chen.github.io/xingciyuan.github.io/大作业.css">
+    <title>星次元</title>
+    <link rel="stylesheet" href="index.css">
 </head>
+    <style>
+        span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 4px;
+            height: 4px;
+            background-color: rgba(75,0,130,0.06);
+            border-radius: 50%;
+            /* box-shadow: 
+            0 0 0 8px rgba(0,255,255,0.01),
+            0 0 20px rgba(0,255,255,0.1); */
+            animation: anii 3s linear infinite;
+            z-index: -2;
+        }
+        /* ... 原有代码 ... */
 
+        span::before {
+            content:"";
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 220px;
+            height: 3px;
+            background: var(--before-background, linear-gradient(90deg,indigo,transparent));
+        }
+
+        /* ... 原有代码 ... */
+        span:nth-child(1) {
+            top: 0;
+            right: 0;
+            left:initial;
+            animation-delay: 0s;
+            animation-duration: 3s;
+        }
+        span:nth-child(2) {
+            top: 0;
+            right: 800px;
+            left:initial;
+            animation-delay: 0.2s;
+            animation-duration: 3s;
+        }
+        span:nth-child(3) {
+            top: 800px;
+            right: 0;
+            left:initial;
+            animation-delay: 0.2s;
+            animation-duration: 3s;
+        }
+        /* span:nth-child(4){
+            top: 200;
+            right: 580;
+            left:initial;
+            animation-delay: 1s;
+            animation-duration: 3s;
+        } */
+        span:nth-child(5) {
+            top: 180;
+            right: 0;
+            left:initial;
+            animation-delay: 0.6s;
+            animation-duration: 2.5s;
+        }
+        span:nth-child(6) {
+            top: 0;
+            right: 400;
+            left:initial;
+            animation-delay: 0.8s;
+            animation-duration: 2.6s;
+        }
+        span:nth-child(7) {
+            top: 300;
+            right: 0;
+            left:initial;
+            animation-delay: 1.2s;
+            animation-duration: 1.75s;
+        }
+        span:nth-child(8) {
+            top: 0;
+            right: 700;
+            left:initial;
+            animation-delay: 1.4s;
+            animation-duration: 1.25s;
+        }
+        span:nth-child(9) {
+            top: 0;
+            right: 1000px;
+            left:initial;
+            animation-delay: 0.75s;
+            animation-duration: 2.25s;
+        }
+    </style>
 <body>
     <div class="container">
         <span></span>
@@ -22,14 +113,14 @@
         <span></span>
         <span></span>
     </div>
-    <img src="https://diaw-chen.github.io/xingciyuan.github.io/科技边框.png" alt="" class="scib">
-    <img src="https://diaw-chen.github.io/xingciyuan.github.io/左源.png" alt="" class="leftt">
-    <img src="https://diaw-chen.github.io/xingciyuan.github.io/右源头.png" alt="" class="rightt">
-    <img src="https://diaw-chen.github.io/xingciyuan.github.io/科技边框2.png" alt="" id="scib2">
-    <div class="box1"><a href="#">神秘空间1</a></div>
-    <div class="box2"><a href="#">神秘空间2</a></div>
-    <div class="box3"><a href="#">神秘空间3</a></div>
-    <div class="box4"><a href="https://diaw-chen.github.io/xiaoguajian.github.io/index.html">神秘小挂件</a></div>
+    <img src="科技边框.png" alt="" class="scib">
+    <img src="左源.png" alt="" class="leftt">
+    <img src="右源头.png" alt="" class="rightt">
+    <img src="科技边框2.png" alt="" id="scib2">
+    <div class="box1"><a href="过场动画1.html">神秘空间1</a></div>
+    <div class="box2"><a href="过场动画2.html">神秘空间2</a></div>
+    <div class="box3"><a href="过场动画3.html">神秘空间3</a></div>
+    <div class="box4"><button class="jingxi" id="surpriseButton">神秘小惊喜</button></div>
     <div id="image-container1"></div>
     <div id="image-container2"></div>
     <div id="image-container3"></div>
@@ -40,6 +131,13 @@
     <button class="character-button" id="button3">关于其他疑惑</button>
     <p id="textDisplay"></p>
 
+    <div class="pendulum-wrapper" id="pendulumWrapper">
+        <div class="rope"></div>
+        <div class="image-container">
+            <img src="小挂件.png" alt="示例图片">
+        </div>
+    </div>
+    <audio src="eonian.MP3" autoplay loop id="music"></audio>
     <script>
         function createFragmentAnimation(imageSrc, containerId, rows, cols) {
             const img = new Image();
@@ -81,9 +179,9 @@
         }
 
         // 调用函数处理三个图片，分别指定不同的碎片分裂数
-        createFragmentAnimation("https://diaw-chen.github.io/xingciyuan.github.io/左人物.png", "image-container1", 35, 35);
-        createFragmentAnimation("https://diaw-chen.github.io/xingciyuan.github.io/中人物.png", "image-container2", 35, 35);
-        createFragmentAnimation("https://diaw-chen.github.io/xingciyuan.github.io/右人物.png", "image-container3", 34, 34);
+        createFragmentAnimation("左人物.png", "image-container1", 35, 35);
+        createFragmentAnimation("中人物.png", "image-container2", 35, 35);
+        createFragmentAnimation("右人物.png", "image-container3", 34, 34);
 
 
         const buttons = [
@@ -93,9 +191,9 @@
         ];
         const textDisplay = document.getElementById('textDisplay');
         const textsToDisplay = [
-            '欢迎探索Plastiny大人创造的神秘空间\nPlastiny大人用神器ComfyUI\n炼制了无数精美壁纸\n藏匿于三大神秘空间中',
-            '神秘空间1蕴藏精美手机壁纸\n神秘空间2蕴藏精美电脑壁纸',
-            '神秘小挂件由您亲自探索\n更多内容敬请期待'
+            '欢迎探索Plastiny大人创造的星次元\n为庆祝星穹铁道两周年\nPlastiny大人制作了周边惊喜\n藏匿于三大神秘空间中',
+            '神秘空间1有着趣味翻牌游戏\n神秘空间2可观赏蝶萤五子棋对弈\n神秘空间3可欣赏全新AI艺术',
+            '神秘小惊喜由您亲自探索\n更多内容敬请期待'
         ];
 
         function startTyping(index) {
@@ -121,6 +219,54 @@
 
         buttons.forEach((button, index) => {
             button.addEventListener('click', () => startTyping(index));
+        });
+        const pendulumWrapper = document.getElementById('pendulumWrapper');
+        let angle = -30;
+        let increasing = true;
+
+        function swing() {
+            if (increasing) {
+                angle += 0.1; // 减小角度增量以降低摆速
+                if (angle >= 30) {
+                    increasing = false;
+                }
+            } else {
+                angle -= 0.1; // 减小角度增量以降低摆速
+                if (angle <= -30) {
+                    increasing = true;
+                }
+            }
+            const rotation = `rotate(${angle}deg)`;
+            pendulumWrapper.style.transform = rotation;
+            requestAnimationFrame(swing);
+        }
+
+        swing();
+
+        const surpriseButton = document.getElementById('surpriseButton');
+        const spans = document.querySelectorAll('span');
+        const music = document.getElementById('music');
+        let isClicked = false;
+
+        surpriseButton.addEventListener('click', () => {
+            if (isClicked) {
+                pendulumWrapper.style.display = 'none';
+                spans.forEach(span => {
+                    span.style.backgroundColor = 'rgba(75,0,130,0.06)';
+                    // 恢复 span::before 的颜色
+                    span.style.setProperty('--before-background', 'linear-gradient(90deg,indigo,transparent)');
+                });
+                music.pause();
+            } else {
+                pendulumWrapper.style.display = 'block';
+                spans.forEach(span => {
+                    span.style.backgroundColor = 'rgba(255, 255, 0, 0.06)';
+                    // 修改 span::before 的颜色为黄色
+                    span.style.setProperty('--before-background', 'linear-gradient(90deg,yellow,transparent)');
+                });
+                music.play();
+            }
+            isClicked = !isClicked;
         });
     </script>
 
