@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <title>Five in a Row Game with Background</title>
+    <style>
+        body {
+            background-image: url('星空背景2.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .main-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .left-image,
+        .right-image {
+            width: 200px; /* 调整图片宽度 */
+            height: auto;
+            margin: 0 20px; /* 调整图片与棋盘的间距 */
+        }
+
+        #board {
+            display: grid;
+            /* 扩大棋盘为 20x20 */
+            grid-template-columns: repeat(20, 35px);
+            grid-template-rows: repeat(20, 35px);
+            gap: 2px;
+            background-color: rgba(0, 0, 0, 0.4); /* 调整棋盘背景颜色 */
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3), 0 0 40px rgba(0, 255, 255, 0.2), 0 0 60px rgba(0, 255, 255, 0.1); /* 添加科技感的光影效果 */
+            border: 5px solid rgba(0, 255, 255, 0.5); /* 调整边框颜色 */
+            position: relative;
+        }
+
+        /* 去掉外层网格线，注释掉以下代码 */
+        /* #board::before,
+        #board::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+        }
+
+        #board::before {
+            background-image: linear-gradient(to right, rgba(0, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 35px 35px;
+        } */
+
+        #board::after {
+            box-shadow: inset 0 0 20px rgba(0, 255, 255, 0.3), inset 0 0 40px rgba(0, 255, 255, 0.2), inset 0 0 60px rgba(0, 255, 255, 0.1);
+        }
+
+        .cell {
+            background-color: rgba(255, 255, 255, 0.1); /* 调整单元格背景颜色 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .cell:hover {
+            background-color: rgba(0, 255, 255, 0.2); /* 调整鼠标悬停时的背景颜色 */
+        }
+
+        .black {
+            width: 28px;
+            height: 28px;
+            background-image: url('霞蝶Q.jpg');
+            background-size: cover;
+            animation: fadeIn 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); /* 添加光影效果 */
+        }
+
+        .white {
+            width: 28px;
+            height: 28px;
+            background-image: url('流萤Q.jpeg');
+            background-size: cover;
+            animation: fadeIn 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 255, 0, 0.5); /* 添加光影效果 */
+        }
+
+        #result {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 28px;
+            display: none;
+            animation: slideDown 0.5s ease;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3); /* 添加光影效果 */
+        }
+
+        #restart {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: rgba(0, 255, 255, 0.3); /* 调整按钮背景颜色 */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); /* 添加光影效果 */
+        }
+
+        #restart:hover {
+            background-color: rgba(0, 255, 255, 0.5); /* 调整鼠标悬停时的背景颜色 */
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                top: -50px;
+            }
+            to {
+                top: 20px;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 4px;
+            height: 4px;
+            background-color: rgba(75, 0, 130, 0.06);
+            border-radius: 50%;
+            animation: anii 3s linear infinite;
+            z-index: -2;
+        }
+
+        span::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 220px;
+            height: 3px;
+            background: var(--before-background, linear-gradient(90deg, indigo, transparent));
+        }
+
+        span:nth-child(1) {
+            top: 0;
+            right: 0;
+            left: initial;
+            animation-delay: 0s;
+            animation-duration: 3s;
+        }
+
+        span:nth-child(2) {
+            top: 0;
+            right: 800px;
+            left: initial;
+            animation-delay: 0.2s;
+            animation-duration: 3s;
+        }
+
+        span:nth-child(3) {
+            top: 800px;
+            right: 0;
+            left: initial;
+            animation-delay: 0.2s;
+            animation-duration: 3s;
+        }
+
+        span:nth-child(5) {
+            top: 180;
+            right: 0;
+            left: initial;
+            animation-delay: 0.6s;
+            animation-duration: 2.5s;
+        }
+
+        span:nth-child(6) {
+            top: 0;
+            right: 400;
+            left: initial;
+            animation-delay: 0.8s;
+            animation-duration: 2.6s;
+        }
+
+        span:nth-child(7) {
+            top: 300;
+            right: 0;
+            left: initial;
+            animation-delay: 1.2s;
+            animation-duration: 1.75s;
+        }
+
+        span:nth-child(8) {
+            top: 0;
+            right: 700;
+            left: initial;
+            animation-delay: 1.4s;
+            animation-duration: 1.25s;
+        }
+
+        span:nth-child(9) {
+            top: 0;
+            right: 1000px;
+            left: initial;
+            animation-delay: 0.75s;
+            animation-duration: 2.25s;
+        }
+
+        @keyframes anii {
+            0% {
+                transform: rotate(315deg) translateX(0);
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: rotate(315deg) translateX(-1000px);
+                opacity: 0;
+            }
+        }
+
+        .box2 {
+            background-color: blanchedalmond;
+            border-radius: 4vmin;
+            color: aqua;
+            position: absolute;
+            overflow: hidden;
+            z-index: 0;
+            width: 180px;
+            height: 110px;
+            top: 10%;
+            left: 6%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box2::before {
+            content: '';
+            width: 200%;
+            height: 200%;
+            background-color: cornflowerblue;
+            position: absolute;
+            left: -50%;
+            top: -50%;
+            background-image: conic-gradient(
+                transparent, blue, transparent 50%
+            );
+            z-index: -2;
+            animation: rotate 2s linear infinite;
+        }
+
+        .box2::after {
+            content: '';
+            position: absolute;
+            inset: 1vmin;
+            background-color: black;
+            border-radius: 4vmin;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .left-image{
+            width: 400px;
+        }
+        .right-image{
+            width:400px;
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <div class="box2"><a href="index.html">返回</a></div>
+    <div class="main-container">
+        <img class="left-image" src="霞蝶棋.png" alt="Left Image">
+        <div id="board"></div>
+        <img class="right-image" src="流萤棋.png" alt="Right Image">
+    </div>
+    <div id="result"></div>
+    <button id="restart" style="display: none;">重新开局</button>
+
+    <script>
+        const board = document.getElementById('board');
+        const result = document.getElementById('result');
+        const restartButton = document.getElementById('restart');
+        let currentPlayer = 'black';
+        // 扩大棋盘为 20x20
+        const rows = 20;
+        const cols = 20;
+        let gameBoard = Array.from({ length: rows }, () => Array(cols).fill(null));
+
+        function createBoard() {
+            for (let i = 0; i < rows; i++) {
+                for (let j = 0; j < cols; j++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('cell');
+                    cell.dataset.row = i;
+                    cell.dataset.col = j;
+                    cell.addEventListener('click', handleCellClick);
+                    board.appendChild(cell);
+                }
+            }
+        }
+
+        function handleCellClick(event) {
+            const row = parseInt(event.target.dataset.row);
+            const col = parseInt(event.target.dataset.col);
+            if (gameBoard[row][col] === null) {
+                gameBoard[row][col] = currentPlayer;
+                const piece = document.createElement('div');
+                piece.classList.add(currentPlayer);
+                event.target.appendChild(piece);
+                if (checkWin(row, col)) {
+                    result.textContent = `${currentPlayer === 'black' ? '遐蝶' : '流萤'} 获胜！`;
+                    result.style.display = 'block';
+                    restartButton.style.display = 'block';
+                    disableBoard();
+                } else if (isBoardFull()) {
+                    result.textContent = '平局！';
+                    result.style.display = 'block';
+                    restartButton.style.display = 'block';
+                } else {
+                    currentPlayer = currentPlayer === 'black' ? 'white' : 'black';
+                }
+            }
+        }
+
+        function checkWin(row, col) {
+            const directions = [
+                [1, 0], [0, 1], [1, 1], [1, -1]
+            ];
+            for (const [dx, dy] of directions) {
+                let count = 1;
+                // 正向检查
+                for (let i = 1; i < 5; i++) {
+                    const newRow = row + i * dx;
+                    const newCol = col + i * dy;
+                    if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols && gameBoard[newRow][newCol] === currentPlayer) {
+                        count++;
+                    } else {
+                        break;
+                    }
+                }
+                // 反向检查
+                for (let i = 1; i < 5; i++) {
+                    const newRow = row - i * dx;
+                    const newCol = col - i * dy;
+                    if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols && gameBoard[newRow][newCol] === currentPlayer) {
+                        count++;
+                    } else {
+                        break;
+                    }
+                }
+                if (count >= 5) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function isBoardFull() {
+            for (let i = 0; i < rows; i++) {
+                for (let j = 0; j < cols; j++) {
+                    if (gameBoard[i][j] === null) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        function disableBoard() {
+            const cells = document.querySelectorAll('.cell');
+            cells.forEach(cell => {
+                cell.removeEventListener('click', handleCellClick);
+                cell.style.cursor = 'default';
+            });
+        }
+
+        function restartGame() {
+            currentPlayer = 'black';
+            gameBoard = Array.from({ length: rows }, () => Array(cols).fill(null));
+            result.style.display = 'none';
+            restartButton.style.display = 'none';
+            const cells = document.querySelectorAll('.cell');
+            cells.forEach(cell => {
+                cell.innerHTML = '';
+                cell.addEventListener('click', handleCellClick);
+                cell.style.cursor = 'pointer';
+            });
+        }
+
+        restartButton.addEventListener('click', restartGame);
+        createBoard();
+    </script>
+</body>
+
+</html>

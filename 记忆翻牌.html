@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <title>记忆翻牌游戏</title>
+    <style>
+        /* 设置背景图片 */
+        body {
+            background-image: url('星空背景3.png'); /* 这里可以替换为你想要的背景图片 URL */
+            background-size: cover; /* 让背景图片撑满屏幕 */
+            background-position: center; /* 背景图片居中显示 */
+            background-repeat: no-repeat; /* 背景图片不重复 */
+            /* 添加背景发光动画 */
+            animation: glowBackground 5s infinite alternate;
+        }
+
+        @keyframes glowBackground {
+            0% {
+                box-shadow: 0 0 50px rgba(0, 255, 255, 0.2);
+            }
+            100% {
+                box-shadow: 0 0 100px rgba(0, 255, 255, 0.6);
+            }
+        }
+
+        .card {
+            width: 100px;
+            height: 100px;
+            background-color: #3498db;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s; /* 添加过渡效果 */
+            transform-style: preserve-3d;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); /* 初始发光阴影，增强效果 */
+            border-radius: 8px; /* 可选：添加圆角使效果更美观 */
+        }
+
+        .card:hover {
+            transform: scale(1.05); /* 鼠标悬停时放大卡片 */
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.8); /* 鼠标悬停时改变阴影，增强效果 */
+        }
+
+        .card.flipped {
+            transform: rotateY(180deg);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.9); /* 翻转时的发光效果，进一步增强 */
+        }
+
+        .card.disappear {
+            animation: disappear 0.3s forwards;
+        }
+
+        @keyframes disappear {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        .card .front,
+        .card .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 8px; /* 与卡片保持一致的圆角 */
+        }
+
+        .card .front {
+            background-color: #3498db;
+        }
+
+        .card .back {
+            background-color: #2ecc71;
+            transform: rotateY(180deg);
+            background-size: cover;
+        }
+
+        /* 美化标题文字 */
+        h1 {
+            color: #00FFFF;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+            animation: glowText 2s infinite alternate;
+        }
+
+        @keyframes glowText {
+            0% {
+                text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+            }
+            100% {
+                text-shadow: 0 0 20px rgba(0, 255, 255, 1);
+            }
+        }
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            z-index: -3;
+        }
+        span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 4px;
+            height: 4px;
+            background-color: rgba(75,0,130,0.06);
+            border-radius: 50%;
+            /* box-shadow: 
+            0 0 0 8px rgba(0,255,255,0.01),
+            0 0 20px rgba(0,255,255,0.1); */
+            animation: anii 3s linear infinite;
+            z-index: 3;
+        }
+        /* ... 原有代码 ... */
+
+        span::before {
+            content:"";
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 220px;
+            height: 3px;
+            background: var(--before-background, linear-gradient(90deg,indigo,transparent));
+        }
+
+        /* ... 原有代码 ... */
+        span:nth-child(1) {
+            top: 0;
+            right: 0;
+            left:initial;
+            animation-delay: 0s;
+            animation-duration: 3s;
+        }
+        span:nth-child(2) {
+            top: 0;
+            right: 800px;
+            left:initial;
+            animation-delay: 0.2s;
+            animation-duration: 3s;
+        }
+        span:nth-child(3) {
+            top: 800px;
+            right: 0;
+            left:initial;
+            animation-delay: 0.2s;
+            animation-duration: 3s;
+        }
+        /* span:nth-child(4){
+            top: 200;
+            right: 580;
+            left:initial;
+            animation-delay: 1s;
+            animation-duration: 3s;
+        } */
+        span:nth-child(5) {
+            top: 180;
+            right: 0;
+            left:initial;
+            animation-delay: 0.6s;
+            animation-duration: 2.5s;
+        }
+        span:nth-child(6) {
+            top: 0;
+            right: 400;
+            left:initial;
+            animation-delay: 0.8s;
+            animation-duration: 2.6s;
+        }
+        span:nth-child(7) {
+            top: 300;
+            right: 0;
+            left:initial;
+            animation-delay: 1.2s;
+            animation-duration: 1.75s;
+        }
+        span:nth-child(8) {
+            top: 0;
+            right: 700;
+            left:initial;
+            animation-delay: 1.4s;
+            animation-duration: 1.25s;
+        }
+        span:nth-child(9) {
+            top: 0;
+            right: 1000px;
+            left:initial;
+            animation-delay: 0.75s;
+            animation-duration: 2.25s;
+        }
+        @keyframes anii {
+            0% {
+                transform: rotate(315deg) translateX(0);
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: rotate(315deg) translateX(-1000px);
+                opacity: 0;
+            }
+        }
+        .box2 {
+            background-color: blanchedalmond;
+            border-radius: 4vmin;
+            color:aqua;
+            position:absolute;
+            overflow: hidden;
+            z-index: 0;
+            width: 180px;
+            height: 110px;
+            top: 10%;
+            left: 6%;
+            transform: translate(-50%, -50%);
+            display: flex;             
+            justify-content: center;             
+            align-items: center;
+        }
+        .box2::before {
+            content:'';
+            width: 200%;
+            height: 200%;
+            background-color:cornflowerblue;
+            position:absolute;
+            left: -50%;
+            top: -50%;
+            background-image: conic-gradient(
+                transparent, blue, transparent 50%
+            );
+            z-index:-2;
+            animation: rotate 2s linear infinite;
+        }
+        .box2::after {
+            content:'';
+            position: absolute;
+            inset:1vmin;
+            background-color: black;
+            border-radius: 4vmin;
+            z-index:-1;
+        }
+        @keyframes rotate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body class="flex flex-col items-center justify-center min-h-screen">
+    <h1 class="text-3xl font-bold mb-4">记忆翻牌游戏</h1>
+    <div id="game-board" class="grid grid-cols-4 gap-4"></div>
+    <button id="reset-button" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">重置游戏</button>
+    <div class="container">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <div class="box2"><a href="index.html">返回</a></div>
+    <script>
+        const cards = [
+            '知更鸟j.jpeg', '知更鸟j.jpeg',
+            '卡夫卡j.jpeg', '卡夫卡j.jpeg',
+            '流萤j.jpg', '流萤j.jpg',
+            '霞蝶j.jpg', '霞蝶j.jpg',
+            '三月七j.jpg', '三月七j.jpg',
+            '景元j.jpg', '景元j.jpg',
+            '丹恒j.jpeg', '丹恒j.jpeg',
+            '刃j.jpeg', '刃j.jpeg',
+        ];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function createCard(value) {
+            const card = document.createElement('div');
+            card.classList.add('card');
+            const front = document.createElement('div');
+            front.classList.add('front');
+            const back = document.createElement('div');
+            back.classList.add('back');
+            back.style.backgroundImage = `url('${value}')`;
+            card.appendChild(front);
+            card.appendChild(back);
+            card.addEventListener('click', () => flipCard(card));
+            return card;
+        }
+
+        let flippedCards = [];
+        let matchedPairs = 0;
+
+        function flipCard(card) {
+            if (flippedCards.length < 2 &&!card.classList.contains('flipped')) {
+                card.classList.add('flipped');
+                flippedCards.push(card);
+                if (flippedCards.length === 2) {
+                    const [card1, card2] = flippedCards;
+                    const value1 = card1.querySelector('.back').style.backgroundImage;
+                    const value2 = card2.querySelector('.back').style.backgroundImage;
+                    if (value1 === value2) {
+                        matchedPairs++;
+                        // 延迟一秒添加退场动画
+                        setTimeout(() => {
+                            card1.classList.add('disappear');
+                            card2.classList.add('disappear');
+                        }, 1000);
+                        // 移除点击事件
+                        card1.removeEventListener('click', () => flipCard(card1));
+                        card2.removeEventListener('click', () => flipCard(card2));
+                        flippedCards = [];
+                        if (matchedPairs === cards.length / 2) {
+                            alert('恭喜你，游戏胜利！');
+                        }
+                    } else {
+                        setTimeout(() => {
+                            card1.classList.remove('flipped');
+                            card2.classList.remove('flipped');
+                            flippedCards = [];
+                        }, 1000);
+                    }
+                }
+            }
+        }
+
+        function startGame() {
+            const gameBoard = document.getElementById('game-board');
+            gameBoard.innerHTML = '';
+            flippedCards = [];
+            matchedPairs = 0;
+            const shuffledCards = shuffle([...cards]);
+            shuffledCards.forEach(value => {
+                const card = createCard(value);
+                gameBoard.appendChild(card);
+            });
+        }
+
+        const resetButton = document.getElementById('reset-button');
+        resetButton.addEventListener('click', startGame);
+
+        startGame();
+    </script>
+</body>
+
+</html>

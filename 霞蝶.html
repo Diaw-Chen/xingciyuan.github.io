@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Two Column Images</title>
+    <style>
+        span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 4px;
+            height: 4px;
+            background-color: rgba(0, 255, 255, 0.06);
+            border-radius: 50%;
+            /* box-shadow: 
+            0 0 0 8px rgba(0,255,255,0.01),
+            0 0 20px rgba(0,255,255,0.1); */
+            animation: anii 3s linear infinite;
+            z-index: -2;
+        }
+
+        span::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 220px;
+            height: 3px;
+            background: var(--before-background, linear-gradient(90deg, aqua, transparent));
+        }
+
+        span:nth-child(1) {
+            top: 0;
+            right: 0;
+            left: initial;
+            animation-delay: 0s;
+            animation-duration: 3s;
+        }
+
+        span:nth-child(2) {
+            top: 0;
+            right: 800px;
+            left: initial;
+            animation-delay: 0.2s;
+            animation-duration: 3s;
+        }
+
+        span:nth-child(3) {
+            top: 800px;
+            right: 0;
+            left: initial;
+            animation-delay: 0.2s;
+            animation-duration: 3s;
+        }
+
+        span:nth-child(5) {
+            top: 180px;
+            right: 0;
+            left: initial;
+            animation-delay: 0.6s;
+            animation-duration: 2.5s;
+        }
+
+        span:nth-child(6) {
+            top: 0;
+            right: 400px;
+            left: initial;
+            animation-delay: 0.8s;
+            animation-duration: 2.6s;
+        }
+
+        span:nth-child(7) {
+            top: 300px;
+            right: 0;
+            left: initial;
+            animation-delay: 1.2s;
+            animation-duration: 1.75s;
+        }
+
+        span:nth-child(8) {
+            top: 0;
+            right: 700px;
+            left: initial;
+            animation-delay: 1.4s;
+            animation-duration: 1.25s;
+        }
+
+        span:nth-child(9) {
+            top: 0;
+            right: 1000px;
+            left: initial;
+            animation-delay: 0.75s;
+            animation-duration: 2.25s;
+        }
+
+        @keyframes anii {
+            0% {
+                transform: rotate(315deg) translateX(0);
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: rotate(315deg) translateX(-1000px);
+                opacity: 0;
+            }
+        }
+
+        body {
+            background-image: url('星空背景4.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* 放大并美化文字 */
+        p.text-white {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+            margin-bottom: 0.5rem;
+        }
+
+        /* 设置图片大小一致 */
+        img {
+            width: 500px; /* 设置固定宽度 */
+            height: 500px; /* 设置固定高度 */
+            object-fit: cover; /* 保持图片比例，覆盖整个容器 */
+            border-radius: 0.375rem; /* 圆角 */
+            transition: transform 0.3s ease; /* 过渡效果 */
+        }
+
+        img:hover {
+            transform: scale(1.05); /* 鼠标悬停时放大 */
+        }
+        .box2 {
+            background-color: blanchedalmond;
+            border-radius: 4vmin;
+            color:aqua;
+            position:absolute;
+            overflow: hidden;
+            z-index: 0;
+            width: 180px;
+            height: 110px;
+            top: 10%;
+            left: 6%;
+            transform: translate(-50%, -50%);
+            display: flex;             
+            justify-content: center;             
+            align-items: center;
+        }
+        .box2::before {
+            content:'';
+            width: 200%;
+            height: 200%;
+            background-color:cornflowerblue;
+            position:absolute;
+            left: -50%;
+            top: -50%;
+            background-image: conic-gradient(
+                transparent, blue, transparent 50%
+            );
+            z-index:-2;
+            animation: rotate 2s linear infinite;
+        }
+        .box2::after {
+            content:'';
+            position: absolute;
+            inset:1vmin;
+            background-color: black;
+            border-radius: 4vmin;
+            z-index:-1;
+        }
+        @keyframes rotate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body class="p-12">
+    <div class="container">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <div class="container mx-auto grid grid-cols-2 gap-2">
+        <div class="flex flex-col gap-6">
+            <div class="flex flex-col items-center">
+                <p class="text-white">原图</p>
+                <a href="ai绘画/霞蝶背.jpg" download>
+                    <img src="ai绘画/霞蝶背.jpg" alt="Image 1">
+                </a>
+            </div>
+            <div class="flex flex-col items-center">
+                <a href="ai绘画/霞蝶线.jpg" download>
+                    <img src="ai绘画/霞蝶线.jpg" alt="Image 2">
+                </a>
+            </div>
+            <div class="flex flex-col items-center">
+                <a href="ai绘画/霞蝶.png" download>
+                    <img src="ai绘画/霞蝶.png" alt="Image 3">
+                </a>
+            </div>
+        </div>
+        <div class="flex flex-col gap-6">
+            <div class="flex flex-col items-center">
+                <p class="text-white">AI重绘</p>
+                <a href="ai绘画/霞蝶背z.png" download>
+                    <img src="ai绘画/霞蝶背z.png" alt="Image 4">
+                </a>
+            </div>
+            <div class="flex flex-col items-center">
+                <a href="ai绘画/霞蝶线z.png" download>
+                    <img src="ai绘画/霞蝶线z.png" alt="Image 5">
+                </a>
+            </div>
+            <div class="flex flex-col items-center">
+                <a href="ai绘画/霞蝶z.png" download>
+                    <img src="ai绘画/霞蝶z.png" alt="Image 6">
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="box2"><a href="壁纸界面.html">返回</a></div>
+</body>
+
+</html>

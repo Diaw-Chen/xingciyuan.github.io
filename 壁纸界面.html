@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Two Column Images</title>
+    <style>
+        span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 4px;
+            height: 4px;
+            background-color: rgba(0,255,255,0.06);
+            border-radius: 50%;
+            /* box-shadow: 
+            0 0 0 8px rgba(0,255,255,0.01),
+            0 0 20px rgba(0,255,255,0.1); */
+            animation: anii 3s linear infinite;
+            z-index: -2;
+        }
+        /* ... 原有代码 ... */
+
+        span::before {
+            content:"";
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 220px;
+            height: 3px;
+            background: var(--before-background, linear-gradient(90deg,aqua,transparent));
+        }
+
+        /* ... 原有代码 ... */
+        span:nth-child(1) {
+            top: 0;
+            right: 0;
+            left:initial;
+            animation-delay: 0s;
+            animation-duration: 3s;
+        }
+        span:nth-child(2) {
+            top: 0;
+            right: 800px;
+            left:initial;
+            animation-delay: 0.2s;
+            animation-duration: 3s;
+        }
+        span:nth-child(3) {
+            top: 800px;
+            right: 0;
+            left:initial;
+            animation-delay: 0.2s;
+            animation-duration: 3s;
+        }
+        /* span:nth-child(4){
+            top: 200;
+            right: 580;
+            left:initial;
+            animation-delay: 1s;
+            animation-duration: 3s;
+        } */
+        span:nth-child(5) {
+            top: 180;
+            right: 0;
+            left:initial;
+            animation-delay: 0.6s;
+            animation-duration: 2.5s;
+        }
+        span:nth-child(6) {
+            top: 0;
+            right: 400;
+            left:initial;
+            animation-delay: 0.8s;
+            animation-duration: 2.6s;
+        }
+        span:nth-child(7) {
+            top: 300;
+            right: 0;
+            left:initial;
+            animation-delay: 1.2s;
+            animation-duration: 1.75s;
+        }
+        span:nth-child(8) {
+            top: 0;
+            right: 700;
+            left:initial;
+            animation-delay: 1.4s;
+            animation-duration: 1.25s;
+        }
+        span:nth-child(9) {
+            top: 0;
+            right: 1000px;
+            left:initial;
+            animation-delay: 0.75s;
+            animation-duration: 2.25s;
+        }
+        @keyframes anii {
+            0% {
+                transform: rotate(315deg) translateX(0);
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: rotate(315deg) translateX(-1000px);
+                opacity: 0;
+            }
+        }
+        body {
+            background-image: url('星空背景4.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .tech-text {
+            font-family: 'Orbitron', sans-serif;
+            /* 去除段落默认的底部外边距 */
+            margin-bottom: 0;
+            transform: translateY(26px);
+        }
+
+        /* 为每个人物定义颜色类 */
+        .xiadie-color {
+            /* 紫蓝渐变 */
+            background: linear-gradient(45deg, #8A2BE2, #00BFFF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .kela-la-color {
+            /* 灰蓝渐变 */
+            background: linear-gradient(45deg, #A9A9A9, #00BFFF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .fuxuan-color {
+            background: linear-gradient(45deg, #8A2BE2, #9400D3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sanyueqi-color {
+            /* 粉蓝渐变 */
+            background: linear-gradient(45deg, #FF69B4, #00BFFF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .liuying-color {
+            background: linear-gradient(45deg, #7FFF00, #32CD32);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .huangquan-color {
+            background: linear-gradient(45deg, #A9A9A9, #696969);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        img{
+            height: 120%;
+        }
+        .box2 {
+            background-color: blanchedalmond;
+            border-radius: 4vmin;
+            color:aqua;
+            position:absolute;
+            overflow: hidden;
+            z-index: 0;
+            width: 180px;
+            height: 110px;
+            top: 10%;
+            left: 6%;
+            transform: translate(-50%, -50%);
+            display: flex;             
+            justify-content: center;             
+            align-items: center;
+        }
+        .box2::before {
+            content:'';
+            width: 200%;
+            height: 200%;
+            background-color:cornflowerblue;
+            position:absolute;
+            left: -50%;
+            top: -50%;
+            background-image: conic-gradient(
+                transparent, blue, transparent 50%
+            );
+            z-index:-2;
+            animation: rotate 2s linear infinite;
+        }
+        .box2::after {
+            content:'';
+            position: absolute;
+            inset:1vmin;
+            background-color: black;
+            border-radius: 4vmin;
+            z-index:-1;
+        }
+        @keyframes rotate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body class="p-12">
+    <div class="container">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <div class="container mx-auto grid grid-cols-2 gap-2">
+        <div class="flex flex-col gap-6">
+            <div class="flex flex-col items-center">
+                <!-- 修改为 text-4xl 以进一步放大文字，并添加新的类名 -->
+                <p class="tech-text text-4xl font-medium xiadie-color">霞蝶</p>
+                <a href="霞蝶.html" >
+                    <img src="霞蝶.png" alt="Image 1" class="object-cover rounded-md w-3/4 mx-auto transition-transform hover:scale-105">
+                </a>
+            </div>
+            <div class="flex flex-col items-center">
+                <!-- 修改为 text-4xl 以进一步放大文字 -->
+                <p class="tech-text text-4xl font-medium kela-la-color">克拉拉</p>
+                <a href="克拉拉.html" >
+                    <img src="克拉拉.png" alt="Image 2" class="object-cover rounded-md w-3/4 mx-auto transition-transform hover:scale-105">
+                </a>
+            </div>
+            <div class="flex flex-col items-center">
+                <!-- 修改为 text-4xl 以进一步放大文字 -->
+                <p class="tech-text text-4xl font-medium fuxuan-color">符玄</p>
+                <a href="符玄.html" >
+                    <img src="符玄.png" alt="Image 3" class="object-cover rounded-md w-3/4 mx-auto transition-transform hover:scale-105">
+                </a>
+            </div>
+        </div>
+        <div class="flex flex-col gap-6">
+            <div class="flex flex-col items-center">
+                <!-- 修改为 text-4xl 以进一步放大文字 -->
+                <p class="tech-text text-4xl font-medium sanyueqi-color">三月七</p>
+                <a href="三月七.html" >
+                    <img src="三月七.png" alt="Image 4" class="object-cover rounded-md w-3/4 mx-auto transition-transform hover:scale-105">
+                </a>
+            </div>
+            <div class="flex flex-col items-center">
+                <!-- 修改为 text-4xl 以进一步放大文字 -->
+                <p class="tech-text text-4xl font-medium liuying-color">流萤</p>
+                <a href="流萤.html" >
+                    <img src="流萤.png" alt="Image 5" class="object-cover rounded-md w-3/4 mx-auto transition-transform hover:scale-105">
+                </a>
+            </div>
+            <div class="flex flex-col items-center">
+                <!-- 修改为 text-4xl 以进一步放大文字 -->
+                <p class="tech-text text-4xl font-medium huangquan-color">黄泉</p>
+                <a href="黄泉.html" >
+                    <img src="黄泉.png" alt="Image 6" class="object-cover rounded-md w-3/4 mx-auto transition-transform hover:scale-105">
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="box2"><a href="index.html">返回</a></div>
+</body>
+
+</html>
